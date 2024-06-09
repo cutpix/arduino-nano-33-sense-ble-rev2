@@ -25,6 +25,12 @@ public:
 	/// <param name="data">Data to send via BLE.</param>
 	void sendData(const String& data) override;
 
+	/// <summary>
+	/// Sends sensor data via BLE.
+	/// </summary>
+	/// <param name="sensorData">Sensor data struct.</param>
+	void sendData(const SensorData& sensorData) override;
+
 private:
 	BLEService sensorService;
 	BLECharacteristic sensorCharacteristic;

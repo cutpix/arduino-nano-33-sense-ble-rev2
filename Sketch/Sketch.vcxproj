@@ -103,6 +103,7 @@
     <ClInclude Include="IMUSensor.h" />
     <ClInclude Include="Microphone.h" />
     <ClInclude Include="Sensor.h" />
+    <ClInclude Include="SensorData.h" />
     <ClInclude Include="SensorManager.h" />
     <ClInclude Include="TemperatureSensor.h" />
     <ClInclude Include="__vm\.Sketch.vsarduino.h" />

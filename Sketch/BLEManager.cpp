@@ -11,7 +11,6 @@ BLEManager::BLEManager()
 
 void BLEManager::initBLE()
 {
-	// Initialize BLE
 	Serial.println("Initializing BLE...");
 	if (!BLE.begin())
 	{
@@ -28,21 +27,17 @@ void BLEManager::initBLE()
 	Serial.println("BLE initialized.");
 }
 
-/// <summary>
-/// Sends data via BLE.
-/// </summary>
-/// <param name="data">Data to send via BLE.</param>
 void BLEManager::sendData(const String& data)
 {
 	BLEDevice central = BLE.central();
 
-	// If a central is connected
+	// If a central is connected.
 	if (central)
 	{
 		Serial.print("Connected to central: ");
 		Serial.println(central.address());
 
-		// If the central is still connected to the peripheral
+		// If the central is still connected to the peripheral.
 		while (central.connected())
 		{
 			sensorCharacteristic.writeValue(data.c_str());
@@ -56,4 +51,9 @@ void BLEManager::sendData(const String& data)
 		Serial.print("Disconnected from central: ");
 		Serial.println(central.address());
 	}
+}
+
+void BLEManager::sendData(const SensorData& data)
+{
+	sendData(data.format());
 }

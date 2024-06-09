@@ -2,6 +2,7 @@
 #include "Arduino.h"
 #include <Arduino_HS300x.h>
 #include <Arduino_BMI270_BMM150.h>
+
 #include "SensorManager.h"
 #include "IMUSensor.h"
 #include "TemperatureSensor.h"
@@ -26,7 +27,7 @@ TemperatureSensor temperatureSensor;
 /// <summary>
 /// Instance of Microphone class to handle microphone audio.
 /// </summary>
-Microphone  microphone = Microphone::getInstance();
+Microphone microphone = Microphone::getInstance();
 
 /// <summary>
 /// Instance of BLEManager class to manage BLE operations.
@@ -56,10 +57,10 @@ void setup()
 	{
 		if (!data.empty())
 		{
-			String micData = "Microphone Data: ";
+			SensorData micData("Microphone");
 			for (auto sample : data)
 			{
-				micData += String(sample) + " ";
+				micData.data.push_back(String(sample));
 			}
 			bleManager.sendData(micData);
 		}
@@ -77,20 +78,25 @@ void loop()
 {
 	sensorManager.readSensors();
 
-	String rmsData = "RMS: " + String(microphone.rms);
+	SensorData rmsData("RMS");
+	rmsData.data.push_back(String(microphone.rms));
 	bleManager.sendData(rmsData);
-	Serial.println(rmsData);
 
-	String tempData = "Temp: " + String(temperatureSensor.temperature) + " °C";
+	SensorData tempData("Temperature");
+	tempData.data.push_back(String(temperatureSensor.temperature) + " °C");
 	bleManager.sendData(tempData);
-	Serial.println(tempData);
 
-	String imuSensorData = "IMU: ";
-	imuSensorData += "Ax: " + String(imuSensor.ax) + ", Ay: " + String(imuSensor.ay) + ", Az: " + String(imuSensor.az);
-	imuSensorData += ", Gx: " + String(imuSensor.gx) + ", Gy: " + String(imuSensor.gy) + ", Gz: " + String(imuSensor.gz);
-	imuSensorData += ", Mx: " + String(imuSensor.mx) + ", My: " + String(imuSensor.my) + ", Mz: " + String(imuSensor.mz);
-	bleManager.sendData(imuSensorData);
-	Serial.println(imuSensorData);
+	SensorData imuData("IMU");
+	imuData.data.push_back("Ax: " + String(imuSensor.ax));
+	imuData.data.push_back("Ay: " + String(imuSensor.ay));
+	imuData.data.push_back("Az: " + String(imuSensor.az));
+	imuData.data.push_back("Gx: " + String(imuSensor.gx));
+	imuData.data.push_back("Gy: " + String(imuSensor.gy));
+	imuData.data.push_back("Gz: " + String(imuSensor.gz));
+	imuData.data.push_back("Mx: " + String(imuSensor.mx));
+	imuData.data.push_back("My: " + String(imuSensor.my));
+	imuData.data.push_back("Mz: " + String(imuSensor.mz));
+	bleManager.sendData(imuData);
 
 	delay(1000);
 }
