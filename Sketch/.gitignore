@@ -1,0 +1,7 @@
+# Ignore Visual Micro directory
+__vm/
+
+# Other ignored files and directories
+.DS_Store
+*.log
+build/
