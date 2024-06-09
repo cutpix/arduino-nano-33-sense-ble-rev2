@@ -1,5 +1,8 @@
 # Ignore Visual Micro directory
-__vm/
+__vm/*
+
+# Un-ignore .Sketch.vsarduino.h
+!__vm/.Sketch.vsarduino.h
 
 # Other ignored files and directories
 .DS_Store
